@@ -1,0 +1,427 @@
+.container {
+  background-color: #232225;
+  margin: 90px;
+}
+
+.subcontainer {
+  padding: 80px;
+  max-width: 338px;
+  width: 100%;
+}
+
+.title {
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  margin: 0;
+  color: #f5f4f5;
+}
+
+.subtitle {
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 4px 0 24px 0;
+  color: #98959d;
+}
+
+/* ------------------- */
+
+.day-picker-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.day-picker-label {
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #b2afb6;
+}
+
+.day-picker-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 308px;
+}
+
+.day-picker-input:hover {
+  background-color: #323232;
+  border-color: #4a4a4a;
+}
+
+.calendar-icon {
+  color: #ffd700;
+  flex-shrink: 0;
+}
+
+.day-picker-date-text {
+  flex: 1;
+  color: #a0a0a0;
+  font-family: sans-serif;
+  font-size: 14px;
+  text-align: left;
+}
+
+.chevron-icon {
+  color: #a0a0a0;
+  flex-shrink: 0;
+}
+
+/* --- CONTAINER PRINCIPAL --- */
+.day-picker-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 1000;
+  background-color: #18181b; /* Fundo Escuro (Zinc-900) */
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  width: 320px;
+}
+
+/* --- RESET GERAL DE BOTÕES --- */
+/* Força botões a não terem fundo e herdarem a cor do texto */
+.day-picker-popover button {
+  background-color: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  color: inherit !important; /* Importante: Herdar a cor branca */
+}
+
+/* --- CABEÇALHO (Mês e Setas) --- */
+.day-picker-popover .rdp-month_caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  height: 32px;
+  position: relative;
+}
+
+.day-picker-popover .rdp-caption_label {
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f4f4f5 !important; /* Título Branco */
+  text-transform: capitalize;
+}
+
+/* Setas de navegação */
+.day-picker-popover .rdp-button_previous,
+.day-picker-popover .rdp-button_next {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  color: #a1a1aa !important; /* Ícone Cinza */
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-picker-popover .rdp-button_previous {
+  left: 0;
+}
+.day-picker-popover .rdp-button_next {
+  right: 0;
+}
+
+.day-picker-popover .rdp-button_previous:hover,
+.day-picker-popover .rdp-button_next:hover {
+  background-color: #27272a !important;
+  color: #ffffff !important;
+}
+
+.day-picker-popover .rdp-chevron {
+  fill: currentColor;
+  width: 20px;
+  height: 20px;
+}
+
+/* --- GRID E DIAS DA SEMANA --- */
+.day-picker-popover .rdp-month_grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Correção: Usando a classe .rdp-weekday que vi no seu print */
+.day-picker-popover .rdp-weekday {
+  color: #71717a !important; /* Cinza escuro para D S T Q... */
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: lowercase;
+  text-align: center;
+  padding-bottom: 8px;
+  width: 40px;
+}
+
+/* --- DIAS (NÚMEROS) --- */
+.day-picker-popover .rdp-day {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  text-align: center;
+}
+
+/* Estilo do botão do dia (ou célula) */
+.day-picker-popover .rdp-day,
+.day-picker-popover .rdp-day button {
+  color: #e4e4e7 !important; /* COR BRANCA/CINZA CLARO FORÇADA */
+  font-family: sans-serif;
+  font-size: 14px;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: all 0.2s;
+}
+
+/* Hover no dia */
+.day-picker-popover .rdp-day:hover:not(.rdp-day_outside):not([disabled]),
+.day-picker-popover .rdp-day button:hover:not([disabled]) {
+  background-color: #27272a !important; /* Fundo cinza ao passar o mouse */
+}
+
+/* --- DIA SELECIONADO (Borda Amarela) --- */
+.day-picker-popover .rdp-day_selected,
+.day-picker-popover .rdp-day_selected button {
+  background-color: transparent !important;
+  border: 1px solid #ffd700 !important;
+  color: #ffd700 !important; /* Texto Amarelo */
+  font-weight: 700;
+}
+
+/* --- DIA DE HOJE (Sublinhado) --- */
+.day-picker-popover .rdp-day_today:not(.rdp-day_selected) {
+  text-decoration: underline;
+  text-decoration-color: #ffd700;
+  text-underline-offset: 4px;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* --- DIAS DESABILITADOS / OUTRO MÊS --- */
+.day-picker-popover .rdp-day_outside,
+.day-picker-popover .rdp-day_outside button {
+  opacity: 0.5;
+  color: #52525b !important; /* Cinza bem escuro para dias de fora */
+}
+
+/* --- ESTILOS DOS DIAS (BASEADO NO SEU DOM) --- */
+
+/* 1. CONFIGURAÇÃO GERAL DO BOTÃO DO DIA */
+.day-picker-popover .rdp-day .rdp-day_button {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: transparent;
+  border: none;
+  color: #e4e4e7; /* Texto cinza claro padrão */
+  font-family: sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+/* Hover no dia comum */
+.day-picker-popover
+  .rdp-day:not(.rdp-outside):not(.rdp-disabled)
+  .rdp-day_button:hover {
+  background-color: #27272a; /* Fundo cinza ao passar o mouse */
+}
+
+/* --- 2. DIA SELECIONADO (Padrão e Hoje) --- */
+/* Aplica borda amarela quando a TD tem a classe .rdp-selected */
+.day-picker-popover .rdp-day.rdp-selected .rdp-day_button {
+  background-color: transparent !important;
+  border: 1px solid #ffd700 !important; /* Borda Amarela */
+  color: #ffd700 !important; /* Texto Amarelo */
+  font-weight: 700;
+}
+
+/* --- 3. DIA DE HOJE (Regras Específicas) --- */
+
+/* Caso A: Hoje E Selecionado (Sua prioridade) */
+/* Remove o sublinhado e garante o amarelo */
+.day-picker-popover .rdp-day.rdp-today.rdp-selected .rdp-day_button {
+  text-decoration: none !important;
+  color: #ffd700 !important;
+  border: 1px solid #ffd700 !important;
+  opacity: 1 !important;
+}
+
+/* Caso B: Hoje mas NÃO Selecionado */
+/* Mantém branco com sublinhado */
+.day-picker-popover .rdp-day.rdp-today:not(.rdp-selected) .rdp-day_button {
+  color: #ffffff !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: #ffd700;
+  text-underline-offset: 4px;
+  border: none !important;
+}
+
+/* --- 4. DIAS BLOQUEADOS / ANTERIORES --- */
+/* Pega as TDs com classe .rdp-disabled ou .rdp-outside */
+.day-picker-popover .rdp-day.rdp-disabled,
+.day-picker-popover .rdp-day.rdp-outside {
+  opacity: 0.25 !important; /* Deixa bem transparente */
+  pointer-events: none; /* Bloqueia o clique */
+}
+
+/* Garante que o botão dentro do dia bloqueado também fique apagado */
+.day-picker-popover .rdp-day.rdp-disabled .rdp-day_button,
+.day-picker-popover .rdp-day.rdp-outside .rdp-day_button {
+  color: #71717a !important; /* Cinza escuro */
+  cursor: not-allowed;
+}
+
+/* ------------------- */
+
+.time-selector-container {
+  padding: 20px 0;
+}
+
+.time-selector-title {
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #b2afb6;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+.period-section {
+  margin-bottom: 24px;
+}
+
+.period-label {
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #98959d;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+.time-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.time-button {
+  padding: 10px 20px;
+  background: #2e2c30;
+  border: 1px solid #3e3c41;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #b2afb6;
+}
+
+.time-button:hover {
+  background: #3a3a3a;
+  border-color: #4a4a4a;
+}
+
+.time-button.selected {
+  background: #2e2c30;
+  border-color: #b8952e;
+  color: #b8952e;
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.time-button:disabled,
+.time-button.disabled {
+  background: #020202;
+  border-color: #3e3c41;
+  color: #747475;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.client-name-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.client-name-label {
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #b2afb6;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+.client-name-input {
+  border: 1px solid #3e3c41;
+  border-radius: 8px;
+  background: #2e2c30;
+  padding: 14px;
+
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #b2afb6;
+  margin-bottom: 24px;
+}
+
+.client-name-button {
+  background: #b8952e;
+  border-radius: 8px;
+  padding: 18px;
+
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+  color: #050505;
+}
+
+.client-name-button:hover {
+  background: #d4b94a;
+}
