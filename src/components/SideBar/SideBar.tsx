@@ -1,16 +1,11 @@
-import { DayPicker } from "react-day-picker";
-import { CalendarIcon } from "../../assets/icons/CalendarIcon";
-import { ChevronIcon } from "../../assets/icons/ChevronIcon";
 import { ClientIcon } from "../../assets/icons/ClientIcon";
 import "./styles.css";
-import { ptBR } from "react-day-picker/locale/pt-BR";
-import { useEffect, useRef, useState } from "react";
-import { format, startOfDay } from "date-fns";
+import { useState } from "react";
+import { format } from "date-fns";
 import { useAppointment } from "../../contexts/useAppointment";
+import { DatePicker } from "../DatePicker/DatePicker";
 
 function SideBar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const [clientName, setClientName] = useState("");
   const [selectedTime, setSelectedTime] = useState<string>("");
 
@@ -22,43 +17,14 @@ function SideBar() {
     noite: ["19:00", "20:00", "21:00"],
   };
 
-  const today = new Date();
-  const todayStart = startOfDay(today);
-
   const formattedSelectedDate = selectedDate
-    ? format(selectedDate, "dd/MM/yyyy", { locale: ptBR })
+    ? format(selectedDate, "dd/MM/yyyy")
     : "";
 
   const isTimeBooked = (time: string) =>
     items.some(
       (item) => item.date === formattedSelectedDate && item.time === time
     );
-
-  const handleSelect = (date: Date | undefined) => {
-    if (date) {
-      setSelectedDate(date);
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
 
   const renderTimeButtons = (times: string[]) => {
     return times.map((hora) => {
@@ -113,41 +79,10 @@ function SideBar() {
         </p>
 
         <form onSubmit={handleSubmit}>
-          <div className="day-picker-container" ref={containerRef}>
-            <label className="day-picker-label">Data</label>
-
-            <div
-              className="day-picker-input"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              <CalendarIcon className="calendar-icon" />
-
-              <span className="day-picker-date-text">
-                {selectedDate
-                  ? format(selectedDate, "dd/MM/yyyy", { locale: ptBR })
-                  : format(today, "dd/MM/yyyy", { locale: ptBR })}
-              </span>
-
-              <ChevronIcon
-                className={`chevron-icon ${isOpen ? "chevron-open" : ""}`}
-              />
-            </div>
-
-            {isOpen && (
-              <div className="day-picker-popover">
-                <DayPicker
-                  locale={ptBR}
-                  mode="single"
-                  selected={selectedDate}
-                  fromMonth={today}
-                  onSelect={handleSelect}
-                  navLayout="around"
-                  fromDate={todayStart}
-                  disabled={(date) => date < todayStart}
-                />
-              </div>
-            )}
-          </div>
+          <DatePicker
+            selectedDate={selectedDate}
+            onDateSelect={setSelectedDate}
+          />
 
           <div className="time-selector-container">
             <h3 className="time-selector-title">Horários</h3>

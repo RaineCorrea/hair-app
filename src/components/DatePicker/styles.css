@@ -1,0 +1,288 @@
+.day-picker-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.day-picker-label {
+  font-family: var(--font-family-primary);
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-secondary);
+}
+
+.day-picker-input {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-base);
+  width: 100%;
+  max-width: var(--width-sm);
+}
+
+.day-picker-input:hover {
+  background-color: var(--color-bg-hover);
+  border-color: #4a4a4a;
+}
+
+.calendar-icon {
+  color: var(--color-accent-primary);
+  flex-shrink: 0;
+}
+
+.day-picker-date-text {
+  flex: 1;
+  color: var(--color-text-quaternary);
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-sm);
+  text-align: left;
+}
+
+.chevron-icon {
+  color: var(--color-text-quaternary);
+  flex-shrink: 0;
+}
+
+.chevron-open {
+  transform: rotate(180deg);
+}
+
+.day-picker-popover {
+  position: absolute;
+  top: calc(100% + var(--spacing-sm));
+  left: 0;
+  z-index: 1000;
+  background-color: var(--color-bg-dark);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  width: var(--width-md);
+}
+
+.day-picker-popover button {
+  background-color: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  color: inherit !important;
+}
+
+.day-picker-popover .rdp-month_caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  height: var(--spacing-3xl);
+  position: relative;
+}
+
+.day-picker-popover .rdp-caption_label {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text-header) !important;
+  text-transform: capitalize;
+}
+
+.day-picker-popover .rdp-button_previous,
+.day-picker-popover .rdp-button_next {
+  width: var(--spacing-3xl);
+  height: var(--spacing-3xl);
+  border-radius: var(--radius-sm);
+  color: #a1a1aa !important;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-picker-popover .rdp-button_previous {
+  left: 0;
+}
+
+.day-picker-popover .rdp-button_next {
+  right: 0;
+}
+
+.day-picker-popover .rdp-button_previous:hover,
+.day-picker-popover .rdp-button_next:hover {
+  background-color: var(--color-border-tertiary) !important;
+  color: var(--color-text-white) !important;
+}
+
+.day-picker-popover .rdp-chevron {
+  fill: currentColor;
+  width: 20px;
+  height: 20px;
+}
+
+.day-picker-popover .rdp-month_grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.day-picker-popover .rdp-weekday {
+  color: var(--color-text-weekday) !important;
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  text-transform: lowercase;
+  text-align: center;
+  padding-bottom: var(--spacing-sm);
+  width: 40px;
+}
+
+.day-picker-popover .rdp-day {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  text-align: center;
+}
+
+.day-picker-popover .rdp-day,
+.day-picker-popover .rdp-day button {
+  color: var(--color-text-light) !important;
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  transition: var(--transition-fast);
+}
+
+.day-picker-popover .rdp-day:hover:not(.rdp-day_outside):not([disabled]),
+.day-picker-popover .rdp-day button:hover:not([disabled]) {
+  background-color: var(--color-border-tertiary) !important;
+}
+
+.day-picker-popover .rdp-day_selected,
+.day-picker-popover .rdp-day_selected button {
+  background-color: transparent !important;
+  border: 1px solid var(--color-accent-primary) !important;
+  color: var(--color-accent-primary) !important;
+  font-weight: 700;
+}
+
+.day-picker-popover .rdp-day_today:not(.rdp-day_selected) {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-primary);
+  text-underline-offset: var(--spacing-xs);
+  color: var(--color-text-white) !important;
+  font-weight: 700;
+}
+
+.day-picker-popover .rdp-day_outside,
+.day-picker-popover .rdp-day_outside button {
+  opacity: 0.5;
+  color: var(--color-text-dim) !important;
+}
+
+.day-picker-popover .rdp-day .rdp-day_button {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  border: none;
+  color: var(--color-text-light);
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.day-picker-popover
+  .rdp-day:not(.rdp-outside):not(.rdp-disabled)
+  .rdp-day_button:hover {
+  background-color: var(--color-border-tertiary);
+}
+
+.day-picker-popover .rdp-day.rdp-selected .rdp-day_button {
+  background-color: transparent !important;
+  border: 1px solid var(--color-accent-primary) !important;
+  color: var(--color-accent-primary) !important;
+  font-weight: 700;
+}
+
+.day-picker-popover .rdp-day.rdp-today.rdp-selected .rdp-day_button {
+  text-decoration: none !important;
+  color: var(--color-accent-primary) !important;
+  border: 1px solid var(--color-accent-primary) !important;
+  opacity: 1 !important;
+}
+
+.day-picker-popover .rdp-day.rdp-today:not(.rdp-selected) .rdp-day_button {
+  color: var(--color-text-white) !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-primary);
+  text-underline-offset: var(--spacing-xs);
+  border: none !important;
+}
+
+.day-picker-popover .rdp-day.rdp-disabled,
+.day-picker-popover .rdp-day.rdp-outside {
+  opacity: 0.25 !important;
+  pointer-events: none;
+}
+
+.day-picker-popover .rdp-day.rdp-disabled .rdp-day_button,
+.day-picker-popover .rdp-day.rdp-outside .rdp-day_button {
+  color: var(--color-text-weekday) !important;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .day-picker-popover {
+    width: 100%;
+    max-width: var(--width-md);
+  }
+}
+
+@media (max-width: 767px) {
+  .day-picker-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: var(--spacing-md);
+  }
+
+  .day-picker-popover {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: var(--width-md);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .day-picker-popover .rdp-day,
+  .day-picker-popover .rdp-day .rdp-day_button {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+
+  .day-picker-popover .rdp-weekday {
+    width: 36px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 374px) {
+  .day-picker-popover {
+    width: 95%;
+    padding: var(--spacing-md);
+  }
+}

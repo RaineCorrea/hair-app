@@ -1,3 +1,4 @@
+import ClientList from "./components/ClientList/ClientList";
 import SideBar from "./components/SideBar/SideBar";
 import { AppointmentProvider } from "./contexts/AppointmentContext";
 import "./index.css";
@@ -5,7 +6,10 @@ import "./index.css";
 function App() {
   return (
     <AppointmentProvider>
-      <SideBar />
+      <div className="app-container">
+        <SideBar />
+        <ClientList />
+      </div>
     </AppointmentProvider>
   );
 }
