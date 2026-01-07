@@ -1,6 +1,7 @@
 import { DayPicker } from "react-day-picker";
 import { CalendarIcon } from "../../assets/icons/CalendarIcon";
 import { ChevronIcon } from "../../assets/icons/ChevronIcon";
+import { ClientIcon } from "../../assets/icons/ClientIcon";
 import "./styles.css";
 import { ptBR } from "react-day-picker/locale/pt-BR";
 import { useEffect, useRef, useState } from "react";
@@ -175,13 +176,16 @@ function SideBar() {
 
           <div className="client-name-container">
             <label className="client-name-label">Cliente</label>
-            <input
-              type="text"
-              className="client-name-input"
-              value={clientName}
-              onChange={(e) => setClientName(e.target.value)}
-              placeholder="Digite o nome do cliente"
-            />
+            <div className="client-name-input-wrapper">
+              <ClientIcon className="client-icon" />
+              <input
+                type="text"
+                className="client-name-input"
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+                placeholder="Digite o nome do cliente"
+              />
+            </div>
             <button type="submit" className="client-name-button">
               Agendar
             </button>
