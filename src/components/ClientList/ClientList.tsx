@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { useAppointment } from "../../contexts/useAppointment";
 import { useState, useMemo } from "react";
 import { TrashIcon } from "../../assets/icons/TrashIcon";
@@ -30,17 +30,29 @@ function getTimePeriod(time: string): Period {
 
 function ClientList() {
   const { items, remove } = useAppointment();
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredAppointments = useMemo(() => {
+    const today = format(new Date(), "dd/MM/yyyy");
+
     if (searchQuery.trim()) {
       const normalizeString = (str: string) =>
-        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        str
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
       const query = normalizeString(searchQuery).trim();
-      return items.filter((item) =>
-        normalizeString(item.clientName).includes(query)
-      );
+      return items.filter((item) => {
+        const itemDate = parse(item.date, "dd/MM/yyyy", new Date());
+        const itemDateFormatted = format(itemDate, "dd/MM/yyyy");
+        return (
+          normalizeString(item.clientName).includes(query) &&
+          itemDateFormatted >= today
+        );
+      });
     }
 
     if (!selectedDate) return [];
@@ -147,9 +159,16 @@ function ClientList() {
                             <div className="appointment-time">
                               {appointment.time}
                             </div>
-                            <h3 className="appointment-name">
-                              {appointment.clientName}
-                            </h3>
+                            <div className="appointment-client-info">
+                              <h3 className="appointment-name">
+                                {appointment.clientName}
+                              </h3>
+                              {searchQuery && (
+                                <span className="appointment-date">
+                                  {appointment.date}
+                                </span>
+                              )}
+                            </div>
                           </div>
                           <button
                             onClick={() => handleDelete(appointment.id)}

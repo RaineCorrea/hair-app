@@ -186,6 +186,14 @@
   min-width: 60px;
 }
 
+.appointment-client-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
+  min-width: 0;
+}
+
 .appointment-name {
   font-family: var(--font-family-primary);
   font-style: normal;
@@ -198,6 +206,16 @@
   word-break: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+.appointment-date {
+  font-family: var(--font-family-primary);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-tertiary);
+  margin: 0;
 }
 
 .delete-button {
