@@ -2,8 +2,12 @@ import { format } from "date-fns";
 import { useAppointment } from "../../contexts/useAppointment";
 import { useState, useMemo } from "react";
 import { TrashIcon } from "../../assets/icons/TrashIcon";
+import { SunIcon } from "../../assets/icons/SunIcon";
+import { SunsetIcon } from "../../assets/icons/SunsetIcon";
+import { MoonIcon } from "../../assets/icons/MoonIcon";
 import "./styles.css";
 import { DatePicker } from "../DatePicker/DatePicker";
+import { SearchInput } from "../SearchInput/SearchInput";
 import type { Item } from "../../contexts/appointmentContextTypes";
 
 type Period = "morning" | "afternoon" | "evening";
@@ -11,6 +15,8 @@ type Period = "morning" | "afternoon" | "evening";
 interface PeriodGroup {
   period: Period;
   label: string;
+  timeRange: string;
+  icon: React.ReactNode;
   appointments: Item[];
 }
 
@@ -25,21 +31,46 @@ function getTimePeriod(time: string): Period {
 function ClientList() {
   const { items, remove } = useAppointment();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-
-  const formattedSelectedDate = selectedDate
-    ? format(selectedDate, "dd/MM/yyyy")
-    : "";
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredAppointments = useMemo(() => {
+    if (searchQuery.trim()) {
+      const normalizeString = (str: string) =>
+        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      const query = normalizeString(searchQuery).trim();
+      return items.filter((item) =>
+        normalizeString(item.clientName).includes(query)
+      );
+    }
+
     if (!selectedDate) return [];
+    const formattedSelectedDate = format(selectedDate, "dd/MM/yyyy");
     return items.filter((item) => item.date === formattedSelectedDate);
-  }, [items, formattedSelectedDate, selectedDate]);
+  }, [items, searchQuery, selectedDate]);
 
   const appointmentsByPeriod = useMemo(() => {
     const periods: PeriodGroup[] = [
-      { period: "morning", label: "Manhã", appointments: [] },
-      { period: "afternoon", label: "Tarde", appointments: [] },
-      { period: "evening", label: "Noite", appointments: [] },
+      {
+        period: "morning",
+        label: "Manhã",
+        timeRange: "09h-12h",
+        icon: <SunIcon className="period-icon" />,
+        appointments: [],
+      },
+      {
+        period: "afternoon",
+        label: "Tarde",
+        timeRange: "13h-18h",
+        icon: <SunsetIcon className="period-icon" />,
+        appointments: [],
+      },
+      {
+        period: "evening",
+        label: "Noite",
+        timeRange: "19h-21h",
+        icon: <MoonIcon className="period-icon" />,
+        appointments: [],
+      },
     ];
 
     filteredAppointments.forEach((appointment) => {
@@ -74,23 +105,41 @@ function ClientList() {
           />
         </div>
 
+        <SearchInput
+          value={searchQuery}
+          onChange={setSearchQuery}
+          onClear={() => setSearchQuery("")}
+        />
+
         {selectedDate && (
           <div className="appointments-section">
             <h2 className="appointments-title">
-              Agendamentos para {formattedSelectedDate}
+              {searchQuery
+                ? `Resultados da busca: "${searchQuery}"`
+                : `Agendamentos para ${format(selectedDate, "dd/MM/yyyy")}`}
             </h2>
 
             {filteredAppointments.length === 0 ? (
               <div className="empty-state">
                 <p className="empty-state-text">
-                  Nenhum agendamento para esta data
+                  {searchQuery
+                    ? `Nenhum cliente encontrado para "${searchQuery}"`
+                    : "Nenhum agendamento para esta data"}
                 </p>
               </div>
             ) : (
               <div className="periods-container">
                 {appointmentsByPeriod.map((periodGroup) => (
                   <div key={periodGroup.period} className="period-section">
-                    <h3 className="period-title">{periodGroup.label}</h3>
+                    <div className="period-header">
+                      <div className="period-title-wrapper">
+                        {periodGroup.icon}
+                        <h3 className="period-title">{periodGroup.label}</h3>
+                      </div>
+                      <span className="period-time-range">
+                        {periodGroup.timeRange}
+                      </span>
+                    </div>
                     <div className="appointments-list">
                       {periodGroup.appointments.map((appointment) => (
                         <div key={appointment.id} className="appointment-card">
@@ -98,12 +147,9 @@ function ClientList() {
                             <div className="appointment-time">
                               {appointment.time}
                             </div>
-                            <div className="appointment-details">
-                              <h3 className="appointment-name">
-                                {appointment.clientName}
-                              </h3>
-                              <p className="appointment-date">{appointment.date}</p>
-                            </div>
+                            <h3 className="appointment-name">
+                              {appointment.clientName}
+                            </h3>
                           </div>
                           <button
                             onClick={() => handleDelete(appointment.id)}

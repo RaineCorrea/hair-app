@@ -70,7 +70,7 @@
 .periods-container {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3xl);
+  gap: var(--spacing-xl);
 }
 
 .period-section {
@@ -85,10 +85,40 @@
   font-weight: 700;
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
-  color: var(--color-accent-primary);
+  color: var(--color-text-primary);
   margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  letter-spacing: normal;
+}
+
+.period-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.period-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.period-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent-primary);
+}
+
+.period-time-range {
+  font-family: var(--font-family-primary);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-tertiary);
 }
 
 .appointments-title {
@@ -128,15 +158,14 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--color-bg-quaternary);
-  border: 1px solid var(--color-border-secondary);
-  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  border-radius: 0;
   transition: var(--transition-base);
 }
 
 .appointment-card:hover {
-  background: var(--color-bg-hover);
-  border-color: var(--color-border-primary);
+  background: var(--color-bg-tertiary);
 }
 
 .appointment-info {
@@ -145,50 +174,30 @@
   gap: var(--spacing-md);
   flex: 1;
   min-width: 0;
-  overflow: hidden;
 }
 
 .appointment-time {
   font-family: var(--font-family-primary);
   font-style: normal;
   font-weight: 700;
-  font-size: var(--font-size-lg);
-  line-height: var(--line-height-loose);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
   color: var(--color-accent-secondary);
-  min-width: 80px;
-  text-align: center;
-}
-
-.appointment-details {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
+  min-width: 60px;
 }
 
 .appointment-name {
   font-family: var(--font-family-primary);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   color: var(--color-text-primary);
   margin: 0;
+  flex: 1;
   word-break: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
-}
-
-.appointment-date {
-  font-family: var(--font-family-primary);
-  font-style: normal;
-  font-weight: 400;
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-tight);
-  color: var(--color-text-tertiary);
-  margin: 0;
 }
 
 .delete-button {
@@ -244,14 +253,28 @@
     font-size: 13px;
   }
 
-  .appointment-card {
+  .period-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+
+  .period-title-wrapper {
+    width: 100%;
+  }
+
+  .period-time-range {
+    align-self: flex-start;
+  }
+
+  .appointment-card {
+    flex-direction: row;
+    align-items: center;
     gap: var(--spacing-md);
   }
 
   .appointment-info {
-    width: 100%;
+    width: auto;
   }
 
   .appointment-time {
@@ -260,7 +283,7 @@
   }
 
   .delete-button {
-    align-self: flex-end;
+    align-self: center;
   }
 }
 

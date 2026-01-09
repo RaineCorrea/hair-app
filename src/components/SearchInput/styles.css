@@ -1,0 +1,94 @@
+.search-input-container {
+  width: 100%;
+  max-width: var(--width-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.search-input-label {
+  font-family: var(--font-family-primary);
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-secondary);
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-bg-quaternary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+  position: relative;
+}
+
+.search-input-wrapper:hover {
+  border-color: var(--color-border-primary);
+}
+
+.search-input-wrapper:focus-within {
+  border-color: var(--color-accent-secondary);
+}
+
+.search-icon {
+  color: var(--color-accent-secondary);
+  flex-shrink: 0;
+}
+
+.search-input-field {
+  border: none;
+  background: transparent;
+  padding: 0;
+  flex: 1;
+  outline: none;
+  font-family: var(--font-family-primary);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-secondary);
+}
+
+.search-input-field::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.search-clear-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-base);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.search-clear-button:hover {
+  background: var(--color-bg-tertiary);
+  color: var(--color-accent-secondary);
+}
+
+.search-clear-button:focus {
+  outline: 2px solid var(--color-accent-secondary);
+  outline-offset: 2px;
+}
+
+.search-clear-icon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 767px) {
+  .search-input-container {
+    max-width: 100%;
+  }
+}
